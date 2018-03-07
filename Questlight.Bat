@@ -273,6 +273,11 @@ goto :confirmName
 																							if /I "%c%" EQU "Forage" goto :gather3
 																							if /I "%c%" EQU "Upgrade" goto :upgrade1
 																							goto :sleep1
+																								:upgrade1
+																								set /P c=So you decided to work on your shelter. What exactly would you like to upgrade? [Roof/Ground]
+																								if /I "%c%" EQU "roof" goto :upgraderoof1
+																								if /I "%c%" EQU "ground" goto :upgradeground1
+																								goto :upgrade1
 																								:gather3
 																									set /P c=You go and gather the berries you saw last night. They look, and smell delicious. You grab 50 berries. Eat one?[Y/N]
 																									if /I "%c%" EQU "Y" goto :eat3
@@ -818,16 +823,6 @@ goto :confirmName
 										set /P c=You died from an unknown blow to the head. Tip: Avoid going to dark places without a weapon, light, or map! Want to go back?[Y/N]
 										if /I "%c%" "Y" goto :choice
 										if /I "%c%" "N" exit
-	:upgrade1
-	if /I "%c%" EQU "roof" goto :
-	if /I "%c%" EQU "ground" goto :
-	goto :upgrade1
-	
-
-
-
-
-
 	rem Restore saved environment and exit batch processing.
 rem ____________                           ____________       ______________________________________________
 
