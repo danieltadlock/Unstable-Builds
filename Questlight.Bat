@@ -278,6 +278,17 @@ goto :confirmName
 																								if /I "%c%" EQU "roof" goto :upgraderoof1
 																								if /I "%c%" EQU "ground" goto :upgradeground1
 																								goto :upgrade1
+																								:upgradeground1
+																								set /P c=You now have a suitable ground! There is a Fox. What now? [hunt/gather/upgraderoof]
+																								if /I "%c%" EQU "hunt" goto :
+																								if /I "%c%" EQU "gather" goto :
+																								if /I "%c%" EQU "upgraderoof" goto :upgraderoof1
+																								goto :upgradeground1
+																								:upgraderoof1
+																								set /P c=So you decided to work on your shelter. What exactly would you like to upgrade? [Roof/Ground]
+																								if /I "%c%" EQU "roof" goto :upgraderoof1
+																								if /I "%c%" EQU "ground" goto :upgradeground1
+																								goto :upgraderoof1
 																								:gather3
 																									set /P c=You go and gather the berries you saw last night. They look, and smell delicious. You grab 50 berries. Eat one?[Y/N]
 																									if /I "%c%" EQU "Y" goto :eat3
