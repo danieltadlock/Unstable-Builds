@@ -1,3 +1,14 @@
+:saveDetector
+if exist %USERPROFILE%/Desktop/savefile.txt
+	if exist %USERPROFILE%/Desktop/savename.txt
+	set /P c=Save detected. Would you like to load it?[Y/N]
+		if /I "%c%" EQU "Y" goto :saveloader
+		if /T "%c%" EQU "N" goto :choice
+		goto 
+			:saveloader
+				set /p save=<savefile.txt
+				set /p name=<savename.txt
+				goto :%save%
 @echo off
 color 6f
 title Questlight 0.0.3 ALPHA
@@ -273,101 +284,158 @@ goto :confirmName
 																							if /I "%c%" EQU "Forage" goto :gather3
 																							if /I "%c%" EQU "Upgrade" goto :upgrade1
 																							goto :sleep1
-																								:upgrade1
-																								set /P c=So you decided to work on your shelter. What exactly would you like to upgrade? [Roof/Ground]
-																								if /I "%c%" EQU "roof" goto :upgraderoof1
-																								if /I "%c%" EQU "ground" goto :upgradeground1
-																								goto :upgrade1
-																								:upgradeground1
-																								set /P c=You now have a suitable ground! There is a Fox. What now? [hunt/gather/upgraderoof]
-																								if /I "%c%" EQU "hunt" goto :
-																								if /I "%c%" EQU "gather" goto :
-																								if /I "%c%" EQU "upgraderoof" goto :upgraderoof1
-																								goto :upgradeground1
-																								:upgraderoof1
-																								set /P c=So you decided to work on your shelter. What exactly would you like to upgrade? [Roof/Ground]
-																								if /I "%c%" EQU "roof" goto :upgraderoof1
-																								if /I "%c%" EQU "ground" goto :upgradeground1
-																								goto :upgraderoof1
-																								:gather3
-																									set /P c=You go and gather the berries you saw last night. They look, and smell delicious. You grab 50 berries. Eat one?[Y/N]
-																									if /I "%c%" EQU "Y" goto :eat3
-																									if /I "%c%" EQU "N" goto :day2
-																									goto :gather3
-																										:day2
-																										rem NOT DONE, WIP
-																											set /P c=You decided that you wouldn't eat a berry yet. After going back to %Shelter1Name%, what do you do? (WIP)
-																											goto :choice
-																										:eat3
-																										rem NOT DONE, WIP
-																											set /P c=You eat the berry. Later, you start to say "Just one more". You ate all of the berries. Well, at least it was very filling. (WIP)
-																											goto :choice
-																								:eat2
-																									echo You decided to eat the raw rabbit. You start to feel sick to your stomach. Later, you start having major stomach problems.
-																									pause
-																									goto :death1Texture
-																								
-																									:death1Texture
-																										echo  ___________
-																										echo /           \
-																										echo .    RIP    .
-																										echo .           .
-																										echo . %Player1% .
-																										echo .           .
-																										echo .  Rabbit   .
-																										echo .   Fever   .
-																										echo ^^^^^^^^^^^^^
-																										goto death1
-																										:death1
-																											echo %Player1% died because of rabbit fever. Tip: Make sure to cook your food! Even if you burn it, it won't kill you! Raw stuff will most likely!
+																										:upgrade1
+																										set /P c=So you decided to work on your shelter. What exactly would you like to upgrade? [Roof/Ground]
+																										if /I "%c%" EQU "roof" goto :upgraderoof1
+																										if /I "%c%" EQU "ground" goto :upgradeground1
+																										goto :upgrade1
+																										:upgradeground1
+																										set /P c=You now have a suitable ground! There is a Fox. What now? [hunt/gather/upgraderoof]
+																										if /I "%c%" EQU "hunt" goto :
+																										if /I "%c%" EQU "gather" goto :
+																										if /I "%c%" EQU "upgraderoof" goto :upgraderoof1
+																										goto :upgradeground1
+																										:upgraderoof1
+																										set /P c=
+																										if /I "%c%" EQU "roof" goto :upgraderoof1
+																										if /I "%c%" EQU "ground" goto :upgradeground1
+																										goto :upgraderoof1
+																										:gather3
+																											set /P c=You go and gather the berries you saw last night. They look, and smell delicious. You grab 50 berries. Eat one?[Y/N]
+																											if /I "%c%" EQU "Y" goto :eat3
+																											if /I "%c%" EQU "N" goto :day2
+																											goto :gather3
+																												:day2
+																												rem NOT DONE, WIP
+																													set /P c=You decided that you wouldn't eat a berry yet. After going back to %Shelter1Name%, what do you do? (WIP)
+																													goto :choice
+																												:eat3
+																												rem NOT DONE, WIP
+																													set /P c=You eat the berry. Later, you start to say "Just one more". You ate all of the berries. Well, at least it was very filling. (WIP)
+																													goto :choice
+																										:eat2
+																											echo You decided to eat the raw rabbit. You start to feel sick to your stomach. Later, you start having major stomach problems.
 																											pause
-																											goto :tryAgainDeath1
-																												:tryAgainDeath1
-																													set /P c=Would you like to try again? ALPHA NOTE: Please note that I have not added a Save feature yet, so you'd have to start all over if you select no[Y/N]
-																													if /I "%c%" EQU "Y" goto :build1
-																													if /I "%c%" EQU "N" exit
-																													goto :tryAgainDeath1	
-															rem :rabbitDefend3
-																set /P c=The rabbit understands what you're doing now, and gave you a funny look, then walk away... Where do you go now?[Forest/Cave]
-																if /I "%c%" EQU "Forest" goto :forest3
-																if /I "%c%" EQU "Cave" goto :cave3
-																goto :rabbitDefend3
-													:rabbitDefend2
-														set /P c=You defended, but the rabbit is still confused![Attack/Defend/Info]  %Player1% HP 100%, Rabbit: HP 66%  CONFUSED
-														if /I "%c%" EQU "Attack" goto :rabbitAttack2
-														if /I "%c%" EQU "Defend" goto :rabbitDefend2
-														goto :rabbitDefend2
-			:takeWeaponBroom1Texture
-			echo               /---(
-			echo ~~~~~~~~~~~~~(----(
-			echo               \---(
-			goto :takeWeaponBroom1
-			:takeWeaponBroom1
-				set /P c=You take the broom, but knock over some assorted objects as you get it. The sleeping man instantly wakes up, and looks at you. What do you do?[Talk/Fight]
-				if /I "%c%" EQU "Talk" goto :humanTalk1
-				if /I "%c%" EQU "Fight" goto :humanFight1Texture
-				goto :takeWeaponBroom1
-					:humanTalk1
-						set /P c=The man is quite annoyed about you being in his house. Do you want to Apoligize(A), Compliment(B), Insult(C), or Trade(D)? [A/B/C/D] 
-						if /I "%c%" EQU "A" goto :humanApoligize1
-						if /I "%c%" EQU "B" goto :humanCompliment1
-						if /I "%c%" EQU "C" goto :humanInsult1
-						if /I "%c%" EQU "D" goto :humanNoTrade1
-						goto :humanTalk1
-							:humanApoligize1
-								echo You apologized, and he lets you go with the broom you took.
-								set weapon=broom
-								pause
-								goto leave1
-							:humanCompliment1
-								echo You attempted to compliment him, but he took it as an insult...
-								pause
-								goto :humanFight2Texture
-							:humanInsult1
-								echo You insulted the man, and he is getting ready for a fight...
-								pause
-								goto :humanFight2Texture
-									:humanFight2Texture
+																											goto :death1Texture
+																										
+																											:death1Texture
+																												echo  ___________
+																												echo /           \
+																												echo .    RIP    .
+																												echo .           .
+																												echo . %Player1% .
+																												echo .           .
+																												echo .  Rabbit   .
+																												echo .   Fever   .
+																												echo ^^^^^^^^^^^^^
+																												goto death1
+																												:death1
+																													echo %Player1% died because of rabbit fever. Tip: Make sure to cook your food! Even if you burn it, it won't kill you! Raw stuff will most likely!
+																													pause
+																													goto :tryAgainDeath1
+																														:tryAgainDeath1
+																															set /P c=Would you like to try again? ALPHA NOTE: Please note that I have not added a Save feature yet, so you'd have to start all over if you select no[Y/N]
+																															if /I "%c%" EQU "Y" goto :build1
+																															if /I "%c%" EQU "N" exit
+																															goto :tryAgainDeath1	
+																	rem :rabbitDefend3
+																		set /P c=The rabbit understands what you're doing now, and gave you a funny look, then walk away... Where do you go now?[Forest/Cave]
+																		if /I "%c%" EQU "Forest" goto :forest3
+																		if /I "%c%" EQU "Cave" goto :cave3
+																		goto :rabbitDefend3
+															:rabbitDefend2
+																set /P c=You defended, but the rabbit is still confused![Attack/Defend/Info]  %Player1% HP 100%, Rabbit: HP 66%  CONFUSED
+																if /I "%c%" EQU "Attack" goto :rabbitAttack2
+																if /I "%c%" EQU "Defend" goto :rabbitDefend2
+																goto :rabbitDefend2
+					:takeWeaponBroom1Texture
+					echo               /---(
+					echo ~~~~~~~~~~~~~(----(
+					echo               \---(
+					goto :takeWeaponBroom1
+					:takeWeaponBroom1
+						set /P c=You take the broom, but knock over some assorted objects as you get it. The sleeping man instantly wakes up, and looks at you. What do you do?[Talk/Fight]
+						if /I "%c%" EQU "Talk" goto :humanTalk1
+						if /I "%c%" EQU "Fight" goto :humanFight1Texture
+						goto :takeWeaponBroom1
+							:humanTalk1
+								set /P c=The man is quite annoyed about you being in his house. Do you want to Apoligize(A), Compliment(B), Insult(C), or Trade(D)? [A/B/C/D] 
+								if /I "%c%" EQU "A" goto :humanApoligize1
+								if /I "%c%" EQU "B" goto :humanCompliment1
+								if /I "%c%" EQU "C" goto :humanInsult1
+								if /I "%c%" EQU "D" goto :humanNoTrade1
+								goto :humanTalk1
+									:humanApoligize1
+										echo You apologized, and he lets you go with the broom you took.
+										set weapon=broom
+										pause
+										goto leave1
+									:humanCompliment1
+										echo You attempted to compliment him, but he took it as an insult...
+										pause
+										goto :humanFight2Texture
+									:humanInsult1
+										echo You insulted the man, and he is getting ready for a fight...
+										pause
+										goto :humanFight2Texture
+											:humanFight2Texture
+												echo      _____
+												echo     /_____\
+												echo    /  \ /  \
+												echo   (. (O O) .)
+												echo    \   n   /
+												echo   __/-----\__
+												echo  /           \
+												echo  ._         _.
+												echo  . \.     ./ .
+												echo  .  .     .  .
+												echo  .  .     .  .
+												echo  /  \_____/  \
+												echo  \__/  _  \__/
+												echo    .  / \  .
+												echo    .  . .  .
+												echo   _.__. .__._
+												echo  /____. .____\
+												echo    HP  [][][][][] ANG
+												goto :humanFight2
+													:humanFight2
+														set /P c=You broke into his home and insulted him, now he's angry and ready to fight...[Defend/Dodge/Attack]  
+															if /I "%c%" EQU "Defend" goto :humanDefend1
+															if /I "%c%" EQU "Dodge" goto :humanDodge1
+															if /I "%c%" EQU "Attack" goto :humanAttack1
+															goto :humanFight2
+									:humanNoTrade1
+										echo You have nothing to trade!
+										pause
+										goto :humanTalk1
+					
+					:humanFight1Texture
+						echo      _____
+						echo     /_____\
+						echo    /  \ /  \
+						echo   (. (O O) .)
+						echo    \   n   /
+						echo   __/-----\__
+						echo  /           \
+						echo  ._         _.
+						echo  . \.     ./ .
+						echo  .  .     .  .
+						echo  .  .     .  .
+						echo  /  \_____/  \
+						echo  \__/  _  \__/
+						echo    .  / \  .
+						echo    .  . .  .
+						echo   _.__. .__._
+						echo  /____. .____\
+						echo    HP  [][][][][] ANG
+						goto :humanFight1
+						:humanFight1
+							set /P c=You woke the man up, and he isn't so happy about it. The man attacks (after getting out of bed quickly)! What do you do?[Defend/Dodge/Attack] 
+							if /I "%c%" EQU "Defend" goto :humanDefend1
+							if /I "%c%" EQU "Dodge" goto :humanDodge1
+							if /I "%c%" EQU "Attack" goto :humanAttack1
+							goto :humanFight1
+								:humanDefend1Texture
 										echo      _____
 										echo     /_____\
 										echo    /  \ /  \
@@ -386,454 +454,403 @@ goto :confirmName
 										echo   _.__. .__._
 										echo  /____. .____\
 										echo    HP  [][][][][] ANG
-										goto :humanFight2
-											:humanFight2
-												set /P c=You broke into his home and insulted him, now he's angry and ready to fight...[Defend/Dodge/Attack]  
-													if /I "%c%" EQU "Defend" goto :humanDefend1
-													if /I "%c%" EQU "Dodge" goto :humanDodge1
-													if /I "%c%" EQU "Attack" goto :humanAttack1
-													goto :humanFight2
-							:humanNoTrade1
-								echo You have nothing to trade!
-								pause
-								goto :humanTalk1
-			
-			:humanFight1Texture
-				echo      _____
-				echo     /_____\
-				echo    /  \ /  \
-				echo   (. (O O) .)
-			    echo    \   n   /
-			    echo   __/-----\__
-			    echo  /           \
-			    echo  ._         _.
-			    echo  . \.     ./ .
-			    echo  .  .     .  .
-			    echo  .  .     .  .
-			    echo  /  \_____/  \
-			    echo  \__/  _  \__/
-   			    echo    .  / \  .
-			    echo    .  . .  .
-				echo   _.__. .__._
-			    echo  /____. .____\
-				echo    HP  [][][][][] ANG
-				goto :humanFight1
-				:humanFight1
-					set /P c=You woke the man up, and he isn't so happy about it. The man attacks (after getting out of bed quickly)! What do you do?[Defend/Dodge/Attack] 
-					if /I "%c%" EQU "Defend" goto :humanDefend1
-					if /I "%c%" EQU "Dodge" goto :humanDodge1
-					if /I "%c%" EQU "Attack" goto :humanAttack1
-					goto :humanFight1
-						:humanDefend1Texture
-								echo      _____
-								echo     /_____\
-								echo    /  \ /  \
-								echo   (. (O O) .)
-								echo    \   n   /
-								echo   __/-----\__
-								echo  /           \
-								echo  ._         _.
-								echo  . \.     ./ .
-								echo  .  .     .  .
-								echo  .  .     .  .
-								echo  /  \_____/  \
-								echo  \__/  _  \__/
-								echo    .  / \  .
-								echo    .  . .  .
-								echo   _.__. .__._
-								echo  /____. .____\
-								echo    HP  [][][][][] ANG
-								goto :humanDefend1
-									:humanDefend1
-										set /P c=You went into a defensive stance, sheilding you from 15 damage![Defend/Dodge/Attack]
-										if /I "%c%" EQU "Defend" goto :humanDefend3Texture
-										if /I "%c%" EQU "Attack" goto :humanAttack2Texture
 										goto :humanDefend1
-							:humanDodge1Texture
-									echo      _____
-									echo     /_____\
-									echo    /  \ /  \
-									echo   (. (O O) .)
-									echo    \   n   /
-									echo   __/-----\__
-									echo  /           \
-									echo  ._         _.
-									echo  . \.     ./ .
-									echo  .  .     .  .
-									echo  .  .     .  .
-									echo  /  \_____/  \
-									echo  \__/  _  \__/
-									echo    .  / \  .
-									echo    .  . .  .
-									echo   _.__. .__._
-									echo  /____. .____\
-									echo    HP  [][][][][] ANG
-									goto :humanDodge1
-										:humanDodge1
-											set /P c=You dodged, avoiding 15 damage!
-											if /I "%c%" EQU "Defend" goto :humanDefend2Texture
-											if /I "%c%" EQU "Attack" goto :humanAttack2Texture
+											:humanDefend1
+												set /P c=You went into a defensive stance, sheilding you from 15 damage![Defend/Dodge/Attack]
+												if /I "%c%" EQU "Defend" goto :humanDefend3Texture
+												if /I "%c%" EQU "Attack" goto :humanAttack2Texture
+												goto :humanDefend1
+									:humanDodge1Texture
+											echo      _____
+											echo     /_____\
+											echo    /  \ /  \
+											echo   (. (O O) .)
+											echo    \   n   /
+											echo   __/-----\__
+											echo  /           \
+											echo  ._         _.
+											echo  . \.     ./ .
+											echo  .  .     .  .
+											echo  .  .     .  .
+											echo  /  \_____/  \
+											echo  \__/  _  \__/
+											echo    .  / \  .
+											echo    .  . .  .
+											echo   _.__. .__._
+											echo  /____. .____\
+											echo    HP  [][][][][] ANG
 											goto :humanDodge1
-							:humanAttack1Texture
-									echo      _____
-									echo     /_____\
-									echo    /  \ /  \
-									echo   (. (O O) .)
-									echo    \   n   /
-									echo   __/-----\__
-									echo  /           \
-									echo  ._         _.
-									echo  . \.     ./ .
-									echo  .  .     .  .
-									echo  .  .     .  .
-									echo  /  \_____/  \
-									echo  \__/  _  \__/
-									echo    .  / \  .
-									echo    .  . .  .
-									echo   _.__. .__._
-									echo  /____. .____\
-									echo    HP  [][][][]-- ANG
-									goto :humanAttack1
-										:humanAttack1
-											set /P c=You attacked, but you took 15 damage instead... You delt 10 damage though... [Attack/Defend] 
-											if /I "%c%" EQU "Defend" goto :humanDefend2
-											if /I "%c%" EQU "Attack" goto :humanAttack2
+												:humanDodge1
+													set /P c=You dodged, avoiding 15 damage!
+													if /I "%c%" EQU "Defend" goto :humanDefend2Texture
+													if /I "%c%" EQU "Attack" goto :humanAttack2Texture
+													goto :humanDodge1
+									:humanAttack1Texture
+											echo      _____
+											echo     /_____\
+											echo    /  \ /  \
+											echo   (. (O O) .)
+											echo    \   n   /
+											echo   __/-----\__
+											echo  /           \
+											echo  ._         _.
+											echo  . \.     ./ .
+											echo  .  .     .  .
+											echo  .  .     .  .
+											echo  /  \_____/  \
+											echo  \__/  _  \__/
+											echo    .  / \  .
+											echo    .  . .  .
+											echo   _.__. .__._
+											echo  /____. .____\
+											echo    HP  [][][][]-- ANG
 											goto :humanAttack1
-												:humanDefend2Texture
-													echo      _____
-													echo     /_____\
-													echo    /  \ /  \
-													echo   (. (O O) .)
-													echo    \   n   /
-													echo   __/-----\__
-													echo  /           \
-													echo  ._         _.
-													echo  . \.     ./ .
-													echo  .  .     .  .
-													echo  .  .     .  .
-													echo  /  \_____/  \
-													echo  \__/  _  \__/
-													echo    .  / \  .
-													echo    .  . .  .
-													echo   _.__. .__._
-													echo  /____. .____\
-													echo    HP  [][][][]-- ANG
-													goto :humanDefend2
-														:humanDefend2
-															set /P c=You defended, sheilding you from 15 damage! [Attack/Defend] 
-															if /I "%c%" EQU "Defend" goto :humanDefend2Texture
-															if /I "%c%" EQU "Attack" goto :humanAttack2Texture
+												:humanAttack1
+													set /P c=You attacked, but you took 15 damage instead... You delt 10 damage though... [Attack/Defend] 
+													if /I "%c%" EQU "Defend" goto :humanDefend2
+													if /I "%c%" EQU "Attack" goto :humanAttack2
+													goto :humanAttack1
+														:humanDefend2Texture
+															echo      _____
+															echo     /_____\
+															echo    /  \ /  \
+															echo   (. (O O) .)
+															echo    \   n   /
+															echo   __/-----\__
+															echo  /           \
+															echo  ._         _.
+															echo  . \.     ./ .
+															echo  .  .     .  .
+															echo  .  .     .  .
+															echo  /  \_____/  \
+															echo  \__/  _  \__/
+															echo    .  / \  .
+															echo    .  . .  .
+															echo   _.__. .__._
+															echo  /____. .____\
+															echo    HP  [][][][]-- ANG
 															goto :humanDefend2
-												:humanAttack2Texture
-													echo      _____
-													echo     /_____\
-													echo    /  \ /  \
-													echo   (. X   X .)
-													echo    \   -   /
-													echo   __/-----\__
-													echo  /           \
-													echo  ._         _.
-													echo  . \.     ./ .
-													echo  .  .     .  .
-													echo  .  .     .  .
-													echo  /  \_____/  \
-													echo  \__/  _  \__/
-													echo    .  / \  .
-													echo    .  . .  .
-													echo   _.__. .__._
-													echo  /____. .____\
-													echo    HP  ---------- KO
-													goto :humanAttack2
-														:humanAttack2
-															set /P c=Critical Hit! He is now knocked out. [Leave/Explore]
-															if /I "%c%" EQU "Leave" goto :field1
-															if /I "%c%" EQU "Explore" goto :exploreHouse1
+																:humanDefend2
+																	set /P c=You defended, sheilding you from 15 damage! [Attack/Defend] 
+																	if /I "%c%" EQU "Defend" goto :humanDefend2Texture
+																	if /I "%c%" EQU "Attack" goto :humanAttack2Texture
+																	goto :humanDefend2
+														:humanAttack2Texture
+															echo      _____
+															echo     /_____\
+															echo    /  \ /  \
+															echo   (. X   X .)
+															echo    \   -   /
+															echo   __/-----\__
+															echo  /           \
+															echo  ._         _.
+															echo  . \.     ./ .
+															echo  .  .     .  .
+															echo  .  .     .  .
+															echo  /  \_____/  \
+															echo  \__/  _  \__/
+															echo    .  / \  .
+															echo    .  . .  .
+															echo   _.__. .__._
+															echo  /____. .____\
+															echo    HP  ---------- KO
 															goto :humanAttack2
-																:exploreHouse1
-																set /P c=You find a broom, a map, and a bushel of grapes left on the table. What do you do? [Broom/Map/Grapes/Back]
-																if /I "%c%" EQU "Broom" goto :humanTalk1
-																if /I "%c%" EQU "Map" goto :Run1
-																if /I "%c%" EQU "Grapes" goto :Run1
-																if /I "%c%" EQU "Back" goto :humanAttack2
-																goto :exploreHouse1
-	:forest1
-		set /P c=You walk into the forest. After awhile, you see a clearing. In the clearing, you see a knife, a deer, and some berries. What do you do?[Hunt/Gather]
-		if /I "%c%" EQU "Hunt" goto :deerFight1Texture
-		if /I "%c%" EQU "Gather" goto :gather1
-		goto :forest1
-			:deerFight1Texture
-			    echo \  \ \          / /  /
-				echo  \__\/          \/__/
-				echo     \ _________ /
-				echo      /         \
-				echo     /           \
-				echo    /   (O _ O)   \
-				echo    \     (_)     /            _
-				echo     \_____O_____/            / \
-				echo       .        .             . .
-				echo 	   .         \____________/ .
-				echo       .                        .
-				echo   	   .    .            \\\\   .
-				echo       .    .     _________     .
-				echo       .    .    .       \ \    .
-				echo       .    .    .       . .    .
-				echo       .____.____.       ._.____.        
-				echo      /____//___/       /__/____/
-				echo             HP  [][]--- SUP
-				goto :deerFight1
-					:deerFight1
-						set /P c=You attack with the knife, doing 30 damage.[Attack/Defend] %Player1% HP 100
-						if /I "%c%" EQU "Attack" goto :deerAttack1Texture
-						if /I "%c%" EQU "Defend" goto :deerDefend1Texture
+																:humanAttack2
+																	set /P c=Critical Hit! He is now knocked out. [Leave/Explore/Save]
+																	if /I "%c%" EQU "Leave" goto :field1
+																	if /I "%c%" EQU "Explore" goto :exploreHouse1
+																	if /I "%c%" EQU "Save" goto :save1
+																	goto :humanAttack2
+																		:exploreHouse1
+																		set /P c=You find a broom, a map, and a bushel of grapes left on the table. What do you do? [Broom/Map/Grapes/Back]
+																		if /I "%c%" EQU "Broom" goto :humanTalk1
+																		if /I "%c%" EQU "Map" goto :Run1
+																		if /I "%c%" EQU "Grapes" goto :Run1
+																		if /I "%c%" EQU "Back" goto :humanAttack2
+																		goto :exploreHouse1
+			:forest1
+				set /P c=You walk into the forest. After awhile, you see a clearing. In the clearing, you see a knife, a deer, and some berries. What do you do?[Hunt/Gather]
+				if /I "%c%" EQU "Hunt" goto :deerFight1Texture
+				if /I "%c%" EQU "Gather" goto :gather1
+				goto :forest1
+					:deerFight1Texture
+						echo \  \ \          / /  /
+						echo  \__\/          \/__/
+						echo     \ _________ /
+						echo      /         \
+						echo     /           \
+						echo    /   (O _ O)   \
+						echo    \     (_)     /            _
+						echo     \_____O_____/            / \
+						echo       .        .             . .
+						echo 	   .         \____________/ .
+						echo       .                        .
+						echo   	   .    .            \\\\   .
+						echo       .    .     _________     .
+						echo       .    .    .       \ \    .
+						echo       .    .    .       . .    .
+						echo       .____.____.       ._.____.        
+						echo      /____//___/       /__/____/
+						echo             HP  [][]--- SUP
 						goto :deerFight1
-							:deerDefend1Texture
-								echo \  \ \          / /  /
-								echo  \__\/          \/__/
-								echo     \ __________ /
-								echo      /          \
-								echo     /            \
-								echo    /  ((O  _ O))  \
-								echo    \      (_)     /           _
-								echo     \______O_____/           / \
-								echo       .        .             . .
-								echo 	   .         \____________/ .
-								echo       .                        .
-								echo   	   .    .            \\\\   .
-								echo       .    .     _________     .
-								echo       .    .    .       \ \    .
-								echo       .    .    .       . .    .
-								echo       .____.____.       ._.____.        
-								echo      /____//___/       /__/____/
-								echo             HP  [][]--- SHO
-								goto :deerDefend1
-									:deerDefend1
-										rem Need to finish the Only Attack branch of deerFight1 in order to have fight-defend-attack number (FIXED)
-										set /P c=You defend against the deer, saving you from 15 damage. You have also shocked the deer.[Attack/Defend] 
-										if /I "%c%" EQU "Attack" goto deerAttack6Texture
-										if /I "%c%" EQU "Defend" goto deerDefend1Texture
+							:deerFight1
+								set /P c=You attack with the knife, doing 30 damage.[Attack/Defend] %Player1% HP 100
+								if /I "%c%" EQU "Attack" goto :deerAttack1Texture
+								if /I "%c%" EQU "Defend" goto :deerDefend1Texture
+								goto :deerFight1
+									:deerDefend1Texture
+										echo \  \ \          / /  /
+										echo  \__\/          \/__/
+										echo     \ __________ /
+										echo      /          \
+										echo     /            \
+										echo    /  ((O  _ O))  \
+										echo    \      (_)     /           _
+										echo     \______O_____/           / \
+										echo       .        .             . .
+										echo 	   .         \____________/ .
+										echo       .                        .
+										echo   	   .    .            \\\\   .
+										echo       .    .     _________     .
+										echo       .    .    .       \ \    .
+										echo       .    .    .       . .    .
+										echo       .____.____.       ._.____.        
+										echo      /____//___/       /__/____/
+										echo             HP  [][]--- SHO
 										goto :deerDefend1
-											:deerAttack6Texture
-												echo \  \ \          / /  /
-												echo  \__\/          \/__/
-												echo     \ __________ /
-												echo      /          \
-												echo     /            \
-												echo    /  ((O  _ O))  \
-												echo    \      (_)     /           _
-												echo     \______O_____/           / \
-												echo       .        .             . .
-												echo 	   .         \____________/ .
-												echo       .                        .
-												echo   	   .    .            \\\\   .
-												echo       .    .     _________     .
-												echo       .    .    .       \ \    .
-												echo       .    .    .       . .    .
-												echo       .____.____.       ._.____.        
-												echo      /____//___/       /__/____/
-												echo             HP  [---- SHO
-												goto :deerAttack6
-													:deerAttack6
-														set /P c=You attack the deer. Because it was shocked, it couldn't defend in time! Critical hit! %Player1% did 18 damage![Attack/Defend] %Player1%'s HP: 100
-														if /I "%c%" EQU "Attack" goto deerAttack7Texture
-														if /I "%c%" EQU "Defend" goto deerDefend2Texture
+											:deerDefend1
+												rem Need to finish the Only Attack branch of deerFight1 in order to have fight-defend-attack number (FIXED)
+												set /P c=You defend against the deer, saving you from 15 damage. You have also shocked the deer.[Attack/Defend] 
+												if /I "%c%" EQU "Attack" goto deerAttack6Texture
+												if /I "%c%" EQU "Defend" goto deerDefend1Texture
+												goto :deerDefend1
+													:deerAttack6Texture
+														echo \  \ \          / /  /
+														echo  \__\/          \/__/
+														echo     \ __________ /
+														echo      /          \
+														echo     /            \
+														echo    /  ((O  _ O))  \
+														echo    \      (_)     /           _
+														echo     \______O_____/           / \
+														echo       .        .             . .
+														echo 	   .         \____________/ .
+														echo       .                        .
+														echo   	   .    .            \\\\   .
+														echo       .    .     _________     .
+														echo       .    .    .       \ \    .
+														echo       .    .    .       . .    .
+														echo       .____.____.       ._.____.        
+														echo      /____//___/       /__/____/
+														echo             HP  [---- SHO
 														goto :deerAttack6
-															:deerAttack7Texture
-																echo \  \ \          / /  /
-																echo  \__\/          \/__/
-																echo     \ __________ /
-																echo      /          \
-																echo     /            \
-																echo    /  ((O  _ O))  \
-																echo    \      (_)     /           _
-																echo     \______O_____/           / \
-																echo       .        .             . .
-																echo 	   .         \____________/ .
-																echo       .                        .
-																echo   	   .    .            \\\\   .
-																echo       .    .     _________     .
-																echo       .    .    .       \ \    .
-																echo       .    .    .       . .    .
-																echo       .____.____.       ._.____.        
-																echo      /____//___/       /__/____/
-																echo             HP  [---- SHO
-																goto :deerAttack7
-																	:deerAttack7
-																	rem NEED TO ADD!
-							:deerAttack1Texture
-							    echo \  \ \          / /  /
-								echo  \__\/          \/__/
-								echo     \ __________ /
-								echo      /          \
-								echo     /    \   /   \
-								echo    /   (O  _ O)   \
-								echo    \      (_)     /           _
-								echo     \_____---____/           / \
-								echo       .        .             . .
-								echo 	   .         \____________/ .
-								echo       .                        .
-								echo   	   .    .            \\\\   .
-								echo       .    .     _________     .
-								echo       .    .    .       \ \    .
-								echo       .    .    .       . .    .
-								echo       .____.____.       ._.____.        
-								echo      /____//___/       /__/____/
-								echo             HP  [][]--- ANG
-								goto :deerAttack1
-									:deerAttack1
-										set /P c=You attempted to attack with the knife, but the deer attacked %Player1%, doing 15 damage to %Player1%. You also made the deer angry[Attack/Defend] %Player1%'s HP: 85
-										if /I "%c%" EQU "Attack" goto :deerAttack2Texture
-										if /I "%c%" EQU "Defend" goto :deerDefend2Texture
+															:deerAttack6
+																set /P c=You attack the deer. Because it was shocked, it couldn't defend in time! Critical hit! %Player1% did 18 damage![Attack/Defend] %Player1%'s HP: 100
+																if /I "%c%" EQU "Attack" goto deerAttack7Texture
+																if /I "%c%" EQU "Defend" goto deerDefend2Texture
+																goto :deerAttack6
+																	:deerAttack7Texture
+																		echo \  \ \          / /  /
+																		echo  \__\/          \/__/
+																		echo     \ __________ /
+																		echo      /          \
+																		echo     /            \
+																		echo    /  ((O  _ O))  \
+																		echo    \      (_)     /           _
+																		echo     \______O_____/           / \
+																		echo       .        .             . .
+																		echo 	   .         \____________/ .
+																		echo       .                        .
+																		echo   	   .    .            \\\\   .
+																		echo       .    .     _________     .
+																		echo       .    .    .       \ \    .
+																		echo       .    .    .       . .    .
+																		echo       .____.____.       ._.____.        
+																		echo      /____//___/       /__/____/
+																		echo             HP  [---- SHO
+																		goto :deerAttack7
+																			:deerAttack7
+																			rem NEED TO ADD!
+									:deerAttack1Texture
+										echo \  \ \          / /  /
+										echo  \__\/          \/__/
+										echo     \ __________ /
+										echo      /          \
+										echo     /    \   /   \
+										echo    /   (O  _ O)   \
+										echo    \      (_)     /           _
+										echo     \_____---____/           / \
+										echo       .        .             . .
+										echo 	   .         \____________/ .
+										echo       .                        .
+										echo   	   .    .            \\\\   .
+										echo       .    .     _________     .
+										echo       .    .    .       \ \    .
+										echo       .    .    .       . .    .
+										echo       .____.____.       ._.____.        
+										echo      /____//___/       /__/____/
+										echo             HP  [][]--- ANG
 										goto :deerAttack1
-													
-											:deerAttack2Texture
-												echo \  \ \          / /  /
-												echo  \__\/          \/__/
-												echo     \ __________ /
-												echo      /          \
-												echo     /    \   /   \
-												echo    /   (O  _ O)   \
-												echo    \      (_)     /           _
-												echo     \_____---____/           / \
-												echo       .        .             . .
-												echo 	   .         \____________/ .
-												echo       .                        .
-												echo   	   .    .            \\\\   .
-												echo       .    .     _________     .
-												echo       .    .    .       \ \    .
-												echo       .    .    .       . .    .
-												echo       .____.____.       ._.____.        
-												echo      /____//___/       /__/____/
-												echo             HP  [][]--- ANG
-												goto :deerAttack2
-													:deerAttack2
-														set /P c=You attempted to attack the deer once again, but it defended, blocking itself from 20 damage.[Attack/Defend] %Player1%'s HP: 85
-														if /I "%c%" EQU "Attack" goto :deerAttack3Texture
-														if /I "%c%" EQU "Defend" goto :deerDefend3Texture
+											:deerAttack1
+												set /P c=You attempted to attack with the knife, but the deer attacked %Player1%, doing 15 damage to %Player1%. You also made the deer angry[Attack/Defend] %Player1%'s HP: 85
+												if /I "%c%" EQU "Attack" goto :deerAttack2Texture
+												if /I "%c%" EQU "Defend" goto :deerDefend2Texture
+												goto :deerAttack1
+															
+													:deerAttack2Texture
+														echo \  \ \          / /  /
+														echo  \__\/          \/__/
+														echo     \ __________ /
+														echo      /          \
+														echo     /    \   /   \
+														echo    /   (O  _ O)   \
+														echo    \      (_)     /           _
+														echo     \_____---____/           / \
+														echo       .        .             . .
+														echo 	   .         \____________/ .
+														echo       .                        .
+														echo   	   .    .            \\\\   .
+														echo       .    .     _________     .
+														echo       .    .    .       \ \    .
+														echo       .    .    .       . .    .
+														echo       .____.____.       ._.____.        
+														echo      /____//___/       /__/____/
+														echo             HP  [][]--- ANG
 														goto :deerAttack2
-															:deerAttack3Texture
-																echo \  \ \          / /  /
-																echo  \__\/          \/__/
-																echo     \ __________ /
-																echo      /          \
-																echo     /    \   /   \
-																echo    /   (O  _ O)   \
-																echo    \      (_)     /           _
-																echo     \_____/\_____/           / \
-																echo       .        .             . .
-																echo 	   .         \____________/ .
-																echo       .                        .
-																echo   	   .    .            \\\\   .
-																echo       .    .     _________     .
-																echo       .    .    .       \ \    .
-																echo       .    .    .       . .    .
-																echo       .____.____.       ._.____.        
-																echo      /____//___/       /__/____/
-																echo             HP  [][]--- V.ANG
-																goto :deerAttack3
-																	:deerAttack3
-																		set /P c=Once again, while you tried to attack the deer, the deer attacked you. The deer landed a critical hit, doing 37 damage.[Attack/Defend] %Player1%'s HP: 48
-																		if /I "%c%" EQU "Attack" goto :deerAttack4Texture
-																		if /I "%c%" EQU "Attack" goto :deerDefend4Texture
+															:deerAttack2
+																set /P c=You attempted to attack the deer once again, but it defended, blocking itself from 20 damage.[Attack/Defend] %Player1%'s HP: 85
+																if /I "%c%" EQU "Attack" goto :deerAttack3Texture
+																if /I "%c%" EQU "Defend" goto :deerDefend3Texture
+																goto :deerAttack2
+																	:deerAttack3Texture
+																		echo \  \ \          / /  /
+																		echo  \__\/          \/__/
+																		echo     \ __________ /
+																		echo      /          \
+																		echo     /    \   /   \
+																		echo    /   (O  _ O)   \
+																		echo    \      (_)     /           _
+																		echo     \_____/\_____/           / \
+																		echo       .        .             . .
+																		echo 	   .         \____________/ .
+																		echo       .                        .
+																		echo   	   .    .            \\\\   .
+																		echo       .    .     _________     .
+																		echo       .    .    .       \ \    .
+																		echo       .    .    .       . .    .
+																		echo       .____.____.       ._.____.        
+																		echo      /____//___/       /__/____/
+																		echo             HP  [][]--- V.ANG
 																		goto :deerAttack3
-																			:deerAttack4Texture
-																				echo \  \ \          / /  /
-																				echo  \__\/          \/__/
-																				echo     \ __________ /
-																				echo      /          \
-																				echo     /    \   /   \
-																				echo    /   (O  _ O)   \
-																				echo    \      (_)     /           _
-																				echo     \____ /\ ____/           / \
-																				echo       .  \\//  .             . .
-																				echo       .   --    \____________/ .
-																				echo       .                        .
-																				echo   	   .    .            \\\\   .
-																				echo       .    .     _________     .
-																				echo       .    .    .       \ \    .
-																				echo       .    .    .       . .    .
-																				echo       .____.____.       ._.____.        _____/
-																				echo      /____//___/       /__/____/       (_____----
-																				echo             HP  [][]--- E.ANG                \
-																				goto :deerAttack4
-																					:deerAttack4
-																						set /P c=The deer defended, blocking 20 damage. While the deer was defending, it knocked out the knife from your hand. You no longer have a knife.[Attack/Defend] %Player1%'s HP: 48
-																						if /I "%c%" EQU "Attack" goto :deerAttack5Texture
-																						if /I "%c%" EQU "Attack" goto :deerDefend5
+																			:deerAttack3
+																				set /P c=Once again, while you tried to attack the deer, the deer attacked you. The deer landed a critical hit, doing 37 damage.[Attack/Defend] %Player1%'s HP: 48
+																				if /I "%c%" EQU "Attack" goto :deerAttack4Texture
+																				if /I "%c%" EQU "Attack" goto :deerDefend4Texture
+																				goto :deerAttack3
+																					:deerAttack4Texture
+																						echo \  \ \          / /  /
+																						echo  \__\/          \/__/
+																						echo     \ __________ /
+																						echo      /          \
+																						echo     /    \   /   \
+																						echo    /   (O  _ O)   \
+																						echo    \      (_)     /           _
+																						echo     \____ /\ ____/           / \
+																						echo       .  \\//  .             . .
+																						echo       .   --    \____________/ .
+																						echo       .                        .
+																						echo   	   .    .            \\\\   .
+																						echo       .    .     _________     .
+																						echo       .    .    .       \ \    .
+																						echo       .    .    .       . .    .
+																						echo       .____.____.       ._.____.        _____/
+																						echo      /____//___/       /__/____/       (_____----
+																						echo             HP  [][]--- E.ANG                \
 																						goto :deerAttack4
-																							:deerAttack5Texture
-																								echo \  \ \          / /  /
-																								echo  \__\/          \/__/
-																								echo     \ __________ /
-																								echo      /          \
-																								echo     /   \\   //  \
-																								echo    /   (O  _ O)   \
-																								echo    \      (_)     /           _
-																								echo     \___ /..\ ___/           / \
-																								echo       . \\__// .             . .
-																								echo 	   .  ----   \____________/ .
-																								echo 	   .                        .
-																								echo   	   .    .            \\\\   .
-																								echo 	   .    .     _________     .
-																								echo 	   .    .    .       \ \    .
-																								echo 	   .    .    .       . .    .
-																								echo 	   .____.____.       ._.____.        _____/
-																								echo 	  /____//___/       /__/____/       (_____----
-																								echo             HP  [][]--- RAGE                 \
-																								goto :deerAttack5'
-																									:deerAttack5
-																										echo You attempted to attack the deer, but the deer goes into a rage, doing 48 damage.
-																										pause
-																										goto death2Texture
-																											:death2Texture
-																												echo  __________
-																												echo /          \
-																												echo .   RIP    .
-																												echo .          .
-																												echo . %Player1%
-																												echo .          .
-																												echo .Deer Fight.
-																												echo .          .
-																												echo ^^^^^^^^^^^^
-																												goto :death2
-																													:death2
-																														set /P c=You died from a deer. Tip: Avoid making animals go into a rage! Want to go back?[Y/N]
-																														if /I "%c%" "Y" goto :deerFight1
-																														if /I "%c%" "N" exit
-							:deerDefend1
-								set /P c=You defend against the deer's attack, blocking 15 damage.[Attack/Defend]
-								if /I "%c%" EQU "Attack" goto :deerAttack?
-								if /I "%c%" EQU "Defend" goto :deerDefend?
-			:gather1
-				set /P c=You pick some berries off of bushes, 50 to be exact, and put them into your inventory. You have quite a bit of time, so what do you want to do?[Build/Gather/Explore]
+																							:deerAttack4
+																								set /P c=The deer defended, blocking 20 damage. While the deer was defending, it knocked out the knife from your hand. You no longer have a knife.[Attack/Defend] %Player1%'s HP: 48
+																								if /I "%c%" EQU "Attack" goto :deerAttack5Texture
+																								if /I "%c%" EQU "Attack" goto :deerDefend5
+																								goto :deerAttack4
+																									:deerAttack5Texture
+																										echo \  \ \          / /  /
+																										echo  \__\/          \/__/
+																										echo     \ __________ /
+																										echo      /          \
+																										echo     /   \\   //  \
+																										echo    /   (O  _ O)   \
+																										echo    \      (_)     /           _
+																										echo     \___ /..\ ___/           / \
+																										echo       . \\__// .             . .
+																										echo 	   .  ----   \____________/ .
+																										echo 	   .                        .
+																										echo   	   .    .            \\\\   .
+																										echo 	   .    .     _________     .
+																										echo 	   .    .    .       \ \    .
+																										echo 	   .    .    .       . .    .
+																										echo 	   .____.____.       ._.____.        _____/
+																										echo 	  /____//___/       /__/____/       (_____----
+																										echo             HP  [][]--- RAGE                 \
+																										goto :deerAttack5'
+																											:deerAttack5
+																												echo You attempted to attack the deer, but the deer goes into a rage, doing 48 damage.
+																												pause
+																												goto death2Texture
+																													:death2Texture
+																														echo  __________
+																														echo /          \
+																														echo .   RIP    .
+																														echo .          .
+																														echo . %Player1%
+																														echo .          .
+																														echo .Deer Fight.
+																														echo .          .
+																														echo ^^^^^^^^^^^^
+																														goto :death2
+																															:death2
+																																set /P c=You died from a deer. Tip: Avoid making animals go into a rage! Want to go back?[Y/N]
+																																if /I "%c%" "Y" goto :deerFight1
+																																if /I "%c%" "N" exit
+									:deerDefend1
+										set /P c=You defend against the deer's attack, blocking 15 damage.[Attack/Defend]
+										if /I "%c%" EQU "Attack" goto :deerAttack?
+										if /I "%c%" EQU "Defend" goto :deerDefend?
+					:gather1
+						set /P c=You pick some berries off of bushes, 50 to be exact, and put them into your inventory. You have quite a bit of time, so what do you want to do?[Build/Gather/Explore]
 
-	:cave1
-		set /P c=You walk into the dark cave. You can't see anything, but you feel that something is watching you.[Leave/Find] 
-		if /I "%c%" EQU "Leave" goto :choice
-		if /I "%c%" EQU "Find" goto :find1
-		goto :cave1
-			:find1Texture
-				echo /..o..o..\
-				echo ..........
-				goto :find1
-					:find1
-						echo You attempt to find what it is that is watching you... But then something hits you...
-						pause
-						goto :death3Texture
-							:death3Texture
-								echo  __________
-								echo /          \
-								echo .   RIP    .
-								echo .          .
-								echo . %Player1%
-								echo .          .
-								echo .    ???   .
-								echo .          .
-								echo ^^^^^^^^^^^^
-								goto :death3
-									:death3
-										set /P c=You died from an unknown blow to the head. Tip: Avoid going to dark places without a weapon, light, or map! Want to go back?[Y/N]
-										if /I "%c%" "Y" goto :choice
-										if /I "%c%" "N" exit
+			:cave1
+				set /P c=You walk into the dark cave. You can't see anything, but you feel that something is watching you.[Leave/Find] 
+				if /I "%c%" EQU "Leave" goto :choice
+				if /I "%c%" EQU "Find" goto :find1
+				goto :cave1
+					:find1Texture
+						echo /..o..o..\
+						echo ..........
+						goto :find1
+							:find1
+								echo You attempt to find what it is that is watching you... But then something hits you...
+								pause
+								goto :death3Texture
+									:death3Texture
+										echo  __________
+										echo /          \
+										echo .   RIP    .
+										echo .          .
+										echo . %Player1%
+										echo .          .
+										echo .    ???   .
+										echo .          .
+										echo ^^^^^^^^^^^^
+										goto :death3
+											:death3
+												set /P c=You died from an unknown blow to the head. Tip: Avoid going to dark places without a weapon, light, or map! Want to go back?[Y/N]
+												if /I "%c%" "Y" goto :choice
+												if /I "%c%" "N" exit
+												
+											:Save1
+											
+
+												
 	rem Restore saved environment and exit batch processing.
 rem ____________                           ____________       ______________________________________________
 
