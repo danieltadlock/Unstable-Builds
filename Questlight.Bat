@@ -1,14 +1,3 @@
-:saveDetector
-if exist %USERPROFILE%/Desktop/savefile.txt
-	if exist %USERPROFILE%/Desktop/savename.txt
-	set /P c=Save detected. Would you like to load it?[Y/N]
-		if /I "%c%" EQU "Y" goto :saveloader
-		if /T "%c%" EQU "N" goto :choice
-		goto 
-			:saveloader
-				set /p save=<savefile.txt
-				set /p name=<savename.txt
-				goto :%save%
 @echo off
 color 6f
 title Questlight 0.0.3 ALPHA
@@ -564,11 +553,21 @@ goto :confirmName
 																		:exploreHouse1
 																		set /P c=You find a broom, a map, and a bushel of grapes left on the table. What do you do? [Broom/Map/Grapes/Back]
 																		if /I "%c%" EQU "Broom" goto :humanTalk1
-																		if /I "%c%" EQU "Map" goto :Run1
-																		if /I "%c%" EQU "Grapes" goto :Run1
+																		if /I "%c%" EQU "Map" goto :Run2
+																		if /I "%c%" EQU "Grapes" goto :Run2
 																		if /I "%c%" EQU "Back" goto :humanAttack2
 																		goto :exploreHouse1
-			:forest1
+																			:run2
+																			set /P c=You run into the meadow with the map. Where now? [Cave/Forest]
+																			if /I "%c%" EQU "Cave" goto :cave2
+																			if /I "%c%" EQU "Map" goto :Forest2
+																			goto :run2
+																				:cave2
+																				set /P c=
+																				if /I "%c%" EQU "Cave" goto :cave2
+																				if /I "%c%" EQU "Map" goto :Forest2
+																				goto :run2
+					:forest1
 				set /P c=You walk into the forest. After awhile, you see a clearing. In the clearing, you see a knife, a deer, and some berries. What do you do?[Hunt/Gather]
 				if /I "%c%" EQU "Hunt" goto :deerFight1Texture
 				if /I "%c%" EQU "Gather" goto :gather1
