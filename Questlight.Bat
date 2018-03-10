@@ -7,11 +7,44 @@ echo Made by N3, version 0.0.3 ALPHA
 echo/
 echo This is an ALPHA build. This means that they're most likley quite a few bugs! Less than 5 percent of the game has currently been added.
 pause
-goto :name
+goto :saveDetector
 
+:saveDetector
+	if exist %USERPROFILE%/Desktop/savefile.txt (
+	 goto :saveDetectorName
+	) else (
+	 goto :name
+	)
+	:saveDetectorName
+		if exist %USERPROFILE%/Desktop/savename.txt (
+		goto :saveloader
+		) else (
+		goto :badSave
+		)
+			:badSave
+				set /P c=Bad save detected. Would you like to restart, or would you like to salvage your save?[Restart/Salvage]
+				if /I "%c%" EQU "Restart" goto :delBadSave
+				if /I "%c%" EQU "Salvage" goto :badSaveName
+				goto :badSave
+					:delBadSave
+						echo Deleting bad save. Please restart after it's done.
+						pause
+						del %USERPROFILE%/Desktop/savefile
+						endlocal
+					:badSaveName
+						set /P Player1=Please put your name here, as the name file is missing.
+						goto :nameSalvaged
+							:nameSalvaged
+								echo. 2>%USERPROFILE%/Desktop/savename.txt
+								@echo %Player1%>savename.txt
+								goto :saveloader
+			:saveloader
+				set /p savelevel=<savefile.txt
+				set /p Player1=<savename.txt
+				goto :%save%
 :name
-set /P Player1= What is your name? 
-goto :confirmName
+	set /P Player1= What is your name? 
+	goto :confirmName
 :confirmName
 	set /P c=Your name is %Player1%, is this correct?[Y/N] 
 	if /I "%c%" EQU "Y" goto :choice
@@ -19,11 +52,14 @@ goto :confirmName
 	goto :confirmName
 
 :choice
+	cd %USERPROFILE%/Desktop
+	echo. 2>savefile.txt
+	echo. 2>savename.txt
 	set savelevel=choice
-	Set var=6
-	@echo %savelevel% 1)questlightsave.txt
-
-	For /f "tokens*" %%i in (questlightsave.txt) do @echo %%i
+	@echo %savelevel%>savefile.txt
+	for /f "tokens*" %%i in (savefile.txt) do @echo %%i
+	@echo %Player1%>savename.txt
+	for /f "tokens*" %%i in (%USERPROFILE%/Desktop/savename.txt) do @echo %%i
 	set /P c=You wake up in a grassy plains area. You see a house, a forest, and a cave. Where do you go first?[House/Forest/Cave] 
 	if /I "%c%" EQU "House" goto :house1
 	if /I "%c%" EQU "Forest" goto :forest1
@@ -32,6 +68,8 @@ goto :confirmName
 
 	:house1
 		set savelevel=house1
+		@echo %savelevel%>savefile.txt
+		for /f "tokens*" %%i in (%USERPROFILE%/Desktop/savefile.txt) do @echo %%i
 		set /P c=You go to the house. Inside, you find some food, a broom, and someone sleeping. What do you do?[Food/Broom/Wake] 
 		if /I "%c%" EQU "Food" goto :eat1Texture
 		if /I "%c%" EQU "Broom" goto :takeWeaponBroom1Texture
@@ -55,12 +93,14 @@ goto :confirmName
 				goto eat1
 					:eat1
 						set savelevel=eat1
+						set /p %savelevel% > %USERPROFILE%/Desktop/savefile.txt
 						set /P c=You eat the food lying on the table. As you eat it, the snores of the man in the bed get quieter and quieter. It seems like he is waking up. What do you do?[Run/Stay] 
 						if /I "%c%" EQU "Run" goto :run1
 						if /I "%c%" EQU "Stay" goto :humanFight1
 						goto :eat1
 							:run1
 								set savelevel=run1
+								set /p %savelevel% > %USERPROFILE%/Desktop/savefile.txt
 								set /P c=You run out of the house into the meadow with some food. You see a forest, a cave, the house you went to, and a rabbit. What do you do?[Forest/Cave/Hunt] 
 								if /I "%c%" EQU "Hunt" goto :rabbitFight1Texture
 								if /I "%c%" EQU "Cave" goto :cave2:
@@ -204,12 +244,14 @@ goto :confirmName
 																										goto rabbitAttack3
 																											:rabbitAttack3
 																												set savelevel=rabbitattack3
+																												set /p %savelevel% > %USERPROFILE%/Desktop/savefile.txt
 																												set /P c=You killed the rabbit! In your inventory is now: Assorted Fruits, and Raw Rabbit. What now?[Forest/Cave]
 																												if /I "%c%" EQU "Forest" goto :forest2
 																												if /I "%c%" EQU "Cave" goto :cave2
 																												goto :rabbitAttack3
 																													:forest2
 																														set savelevel=forest2
+																														set /p %savelevel% > %USERPROFILE%/Desktop/savefile.txt
 																														set /P c=As you go into the forest, the sun begins to set. You see quite a few sturdy sticks that could make a shelter in the woods. You also see some very delicious looking berries. What should you do now?[Shelter/Gather] 
 																														if /I "%c%" EQU "Shelter" goto :prebuild1
 																														if /I "%c%" EQU "Gather" goto :gather2
